@@ -68,8 +68,11 @@ fun isArabicDigitSelected(): Boolean = when (preferredDigits) {
 
 fun goForWorker(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
+val AbstractDate.yearWithOffset
+    get() = year + (if (this is PersianDate) persianYearOffset else 0)
+
 fun toLinearDate(date: AbstractDate): String = "%s/%s/%s".format(
-    formatNumber(date.year), formatNumber(date.month), formatNumber(date.dayOfMonth)
+    formatNumber(date.yearWithOffset), formatNumber(date.month), formatNumber(date.dayOfMonth)
 )
 
 fun isNightModeEnabled(context: Context): Boolean =
@@ -80,7 +83,7 @@ fun formatDate(date: AbstractDate): String = if (numericalDatePreferred)
 else when (language) {
     LANG_CKB -> "%sی %sی %s"
     else -> "%s %s %s"
-}.format(formatNumber(date.dayOfMonth), getMonthName(date), formatNumber(date.year))
+}.format(formatNumber(date.dayOfMonth), getMonthName(date), formatNumber(date.yearWithOffset))
 
 fun isNonArabicScriptSelected() = when (language) {
     LANG_EN_US, LANG_JA -> true

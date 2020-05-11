@@ -189,7 +189,7 @@ class CalendarsView @JvmOverloads constructor(context: Context, attrs: Attribute
                 binding.day.text = formatNumber(date.dayOfMonth)
                 binding.monthYear.contentDescription = ""
                 binding.monthYear.text =
-                    listOf(getMonthName(date), formatNumber(date.year)).joinToString("\n")
+                    listOf(getMonthName(date), formatNumber(date.yearWithOffset)).joinToString("\n")
             }
 
             override fun onClick(view: View?) =

@@ -22,11 +22,19 @@ import android.graphics.Color
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
 import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.byagowi.persiancalendar.LANG_CKB
+import com.byagowi.persiancalendar.PREF_PERSIAN_OFFSET
+import com.byagowi.persiancalendar.R
 import com.byagowi.persiancalendar.databinding.CalendarTypeItemBinding
 import com.byagowi.persiancalendar.ui.MainActivity
+import com.byagowi.persiancalendar.utils.appPrefs
+import com.byagowi.persiancalendar.utils.language
 import com.byagowi.persiancalendar.utils.layoutInflater
+import com.byagowi.persiancalendar.utils.persianYearOffset
 import java.util.*
 
 class RecyclerListAdapter(
@@ -124,6 +132,17 @@ class RecyclerListAdapter(
                 val newState = !binding.checkTextView.isChecked
                 binding.checkTextView.isChecked = newState
                 enabled[position] = newState
+
+                if (values[position] == "SHAMSI" && newState && language == LANG_CKB) {
+                    AlertDialog.Builder(context)
+                        .setTitle("Change the offset?")
+                        .setNegativeButton(R.string.cancel, null)
+                        .setPositiveButton(R.string.accept) { _, _ ->
+                            context.appPrefs.edit {
+                                putInt(PREF_PERSIAN_OFFSET, if (persianYearOffset == 0) 1321 else 0)
+                            }
+                        }.show()
+                }
             }
         }
 

@@ -141,7 +141,7 @@ class CalendarFragment : Fragment() {
         calendarPager.onDayLongClicked = fun(jdn: Long) { addEventOnCalendar(jdn) }
         calendarPager.onMonthSelected = fun() {
             val date = calendarPager.selectedMonth
-            mainActivity.setTitleAndSubtitle(getMonthName(date), formatNumber(date.year))
+            mainActivity.setTitleAndSubtitle(getMonthName(date), formatNumber(date.yearWithOffset))
             todayButton?.isVisible =
                 date.year != initialDate.year || date.month != initialDate.month
         }

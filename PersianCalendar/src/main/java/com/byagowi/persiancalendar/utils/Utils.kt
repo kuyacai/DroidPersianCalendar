@@ -64,6 +64,8 @@ var calculationMethod = CalculationMethod.valueOf(DEFAULT_PRAY_TIME_METHOD)
 var language: String = DEFAULT_APP_LANGUAGE
     private set
     get() = if (field.isEmpty()) DEFAULT_APP_LANGUAGE else field
+var persianYearOffset: Int = 0
+    private set
 var coordinate: Coordinate? = null
     private set
 var mainCalendar = CalendarType.SHAMSI
@@ -377,6 +379,8 @@ fun updateStoredPreference(context: Context) {
     val prefs = context.appPrefs
 
     language = prefs.getString(PREF_APP_LANGUAGE, null) ?: DEFAULT_APP_LANGUAGE
+
+    persianYearOffset = prefs.getInt(PREF_PERSIAN_OFFSET, 0)
 
     preferredDigits =
         if (prefs.getBoolean(PREF_PERSIAN_DIGITS, DEFAULT_PERSIAN_DIGITS)) when (language) {
